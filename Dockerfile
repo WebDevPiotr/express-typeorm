@@ -9,6 +9,5 @@ RUN npm install
 
 COPY ./ .
 
+ENV JWT_SECRET=secret
 ENV PORT=8080
-
-CMD [ "npm", "run", "dev" ]

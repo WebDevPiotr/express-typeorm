@@ -1,12 +1,29 @@
 import "reflect-metadata";
-import { createConnection } from "typeorm";
+import dotenv from "dotenv"
+dotenv.config()
+
 import express from 'express'
+import Database from "Database/Database";
+import AppBuilder from "AppBuilder";
+
 import cors from 'cors'
+import AuthorizationFilter from 'Security/AuthorizationFilter'
 
-createConnection()
+import AuthController from 'Security/AuthController'
+import UserController from 'User/UserController'
+import ErrorHandler from 'Errors/ErrorHandler'
 
-const app = express();
-app.use(cors());
 
-const port = process.env.PORT || 8081;
-const server = app.listen(port, () => console.log(`Server started at http://localhost:${port}`));
+Database.init()
+    .then(() => {
+
+        new AppBuilder(express())
+            .addMiddleware(cors())
+            .addMiddleware(express.json())
+            .addMiddleware(AuthorizationFilter, /^((?!\/auth).)*$/)
+            .addController('/auth', AuthController)
+            .addController('/user', UserController)
+            .addErrorHandler(ErrorHandler)
+            .start()
+
+    })
