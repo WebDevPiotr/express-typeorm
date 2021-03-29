@@ -1,18 +1,26 @@
-import { Router, Request, Response } from 'express'
+import { Router, Request, Response, NextFunction } from 'express'
 import UserService from './UserService'
 import User from './User.entity'
 
 const router: Router = Router()
 
-router.post('/', async (req: Request, res: Response) => {
-    const users: User[] = await UserService.findAll()
-    res.status(200).json(users)
+router.get('/', async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const users: User[] = await UserService.findAll()
+        res.status(200).json(users)
+    } catch (e) {
+        next(e)
+    }
 })
 
-router.post('/:id', async (req: Request, res: Response) => {
-    const id: number = Number(req.params.id)
-    const user = await UserService.findById(id)
-    res.status(201).json(user)
+router.get('/:id', async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const id: number = Number(req.params.id)
+        const user = await UserService.findById(id)
+        res.status(201).json(user)
+    } catch (e) {
+        next(e)
+    }
 })
 
 export default router

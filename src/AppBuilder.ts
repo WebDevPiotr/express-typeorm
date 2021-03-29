@@ -4,6 +4,7 @@ import { Express, Response, Request, NextFunction, Router } from 'express'
 type Middleware = (req: Request, res: Response, next: NextFunction) => void
 type ErrorHandler = (error: HttpError, req: Request, res: Response, next: NextFunction) => void
 type Path = string | RegExp
+type Replacer = (key: string, value: any) => any
 
 class AppBuilder {
 
@@ -15,7 +16,8 @@ class AppBuilder {
     }
 
     public addMiddleware(middleware: Middleware, path?: Path) {
-        this.app.use(path, middleware)
+        if (path) this.app.use(path, middleware)
+        else this.app.use(middleware)
         return this
     }
 
@@ -31,6 +33,12 @@ class AppBuilder {
 
     public start() {
         this.app.listen(this.port, () => console.log(`Server started at http://localhost:${this.port}`));
+        return this.app
+    }
+
+    public addJsonRepleacer(replacer: Replacer) {
+        this.app.set("json replacer", replacer)
+        return this
     }
 
 }

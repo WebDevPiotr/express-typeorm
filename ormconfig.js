@@ -1,13 +1,12 @@
 const base = {
    type: "postgres",
-   host: "localhost",
+   host: "postgres",
    port: 5432,
    username: "postgres",
    password: "postgres",
-   database: "postgres",
    synchronize: true,
    logging: false,
-   entities: ["src/**/*{.entity.ts}"],
+   entities: ["src/**/*.entity.ts"],
    migrations: ["src/Migration/**/*.ts"],
    cli: {
       "migrationsDir": "src/Migration"
@@ -28,4 +27,6 @@ const developmentConfig = Object.assign(development, base);
 
 const testConfig = Object.assign(test, base);
 
-export default [developmentConfig, testConfig]
+module.exports = [
+   developmentConfig, testConfig
+]

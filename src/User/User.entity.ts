@@ -2,7 +2,7 @@ import { Entity, PrimaryGeneratedColumn, Column, BeforeInsert, BeforeUpdate } fr
 import RegisterRequest from 'Security/dto/RegisterRequest'
 import PasswordHash from "Security/PasswordHash";
 
-@Entity()
+@Entity('users')
 class User {
 
     @PrimaryGeneratedColumn()
@@ -20,11 +20,13 @@ class User {
     @Column()
     public password: string
 
-    constructor(body: RegisterRequest) {
-        this.firstName = body.firstName
-        this.lastName = body.lastName
-        this.email = body.email
-        this.password = body.password
+    public static fromRequest(body: RegisterRequest) {
+        const user = new User()
+        user.firstName = body.firstName
+        user.lastName = body.lastName
+        user.email = body.email
+        user.password = body.password
+        return user
     }
 
     @BeforeInsert()

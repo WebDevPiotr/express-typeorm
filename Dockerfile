@@ -5,9 +5,8 @@ WORKDIR /usr/src/app
 
 COPY package.json .
 
+RUN npm update
+
 RUN npm install
 
 COPY ./ .
-
-ENV JWT_SECRET=secret
-ENV PORT=8080
