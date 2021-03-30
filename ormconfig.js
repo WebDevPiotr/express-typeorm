@@ -1,6 +1,5 @@
 const base = {
    type: "postgres",
-   host: "postgres",
    port: 5432,
    username: "postgres",
    password: "postgres",
@@ -16,11 +15,13 @@ const base = {
 const development = {
    name: "development",
    database: "dev",
+   host: "postgres-dev",
 }
 
 const test = {
    name: "test",
    database: "test",
+   host: "postgres-test",
 }
 
 const developmentConfig = Object.assign(development, base);

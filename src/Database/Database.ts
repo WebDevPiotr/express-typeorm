@@ -4,8 +4,13 @@ class Database {
 
     private static connection: Connection
 
-    public static async init() { 
+    public static async init() {
         this.connection = await createConnection(process.env.NODE_ENV)
+    }
+
+    public static async close() {
+        this.connection.close()
+        this.connection = null
     }
 
     public static getConnection() {

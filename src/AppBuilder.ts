@@ -9,7 +9,6 @@ type Replacer = (key: string, value: any) => any
 class AppBuilder {
 
     private readonly app: Express
-    private readonly port: number = Number(process.env.PORT) || 8000
 
     constructor(app: Express) {
         this.app = app
@@ -31,8 +30,7 @@ class AppBuilder {
         return this
     }
 
-    public start() {
-        this.app.listen(this.port, () => console.log(`Server started at http://localhost:${this.port}`));
+    public build() {
         return this.app
     }
 

@@ -1,5 +1,4 @@
 import express from 'express'
-import Database from "Database/Database";
 import AppBuilder from "AppBuilder";
 
 import cors from 'cors'
@@ -11,9 +10,7 @@ import ErrorHandler from 'Errors/ErrorHandler'
 
 import JsonReplacer from 'Utils/JsonReplacer'
 
-const startServer = async () => {
-    await Database.init()
-
+const buildApp = () => {
     return new AppBuilder(express())
         .addMiddleware(cors())
         .addMiddleware(express.json())
@@ -22,7 +19,7 @@ const startServer = async () => {
         .addController('/users', UserController)
         .addErrorHandler(ErrorHandler)
         .addJsonRepleacer(JsonReplacer)
-        .start()
+        .build()
 }
 
-export default startServer
+export default buildApp

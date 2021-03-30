@@ -6,7 +6,8 @@ const router: Router = Router()
 
 router.post('/login', async (req: Request, res: Response, next: NextFunction) => {
     try {
-        await AuthService.handleLoginRequest(req, res)
+        const token = await AuthService.handleLoginRequest(req.body)
+        res.setHeader('Authorization', `Bearer ${token}`)
         res.status(200).send()
     } catch (e) {
         next(e)
@@ -15,7 +16,8 @@ router.post('/login', async (req: Request, res: Response, next: NextFunction) =>
 
 router.post('/register', async (req: Request, res: Response, next: NextFunction) => {
     try {
-        await AuthService.handleRegisterRequest(req, res)
+        const token = await AuthService.handleRegisterRequest(req.body)
+        res.setHeader('Authorization', `Bearer ${token}`)
         res.status(201).send()
     } catch (e) {
         next(e)

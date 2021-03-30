@@ -1,6 +1,5 @@
 import jwt from 'jsonwebtoken'
 import User from 'User/User.entity'
-
 class JwtToken {
 
     private static readonly secret: string = process.env.JWT_SECRET
@@ -31,7 +30,7 @@ class JwtToken {
     }
 
     public static decodeToken(token: string) {
-        return jwt.verify(token, this.secret)
+        return jwt.decode(token)
     }
 
 }
