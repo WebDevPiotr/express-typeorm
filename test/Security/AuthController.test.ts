@@ -79,32 +79,32 @@ const createUser = async () => {
 const tokenExpression = /^Bearer\s[A-Za-z0-9-_=]+\.[A-Za-z0-9-_=]+\.?[A-Za-z0-9-_.+/=]*$/
 
 const loginBody: LoginRequest = {
-    email: 'piotr@immotef.com',
+    email: 'john@gmail.com',
     password: '111',
 }
 
 const wrongEmailLoginBody: LoginRequest = {
-    email: 'piotrek@immotef.com',
+    email: 'johny@gmail.com',
     password: '111',
 }
 
 const wrongPasswordLoginBody: LoginRequest = {
-    email: 'piotr@immotef.com',
+    email: 'john@gmail.com',
     password: '1111',
 }
 
 const registerBody: RegisterRequest = {
-    firstName: 'Piotr',
-    lastName: 'Stolarczyk',
-    email: 'piotr@immotef.com',
+    firstName: 'John',
+    lastName: 'Bravo',
+    email: 'john@gmail.com',
     password: '111',
     repeatPassword: '111'
 }
 
 const differentPasswordsRegisterBody: RegisterRequest = {
-    firstName: 'Piotr',
-    lastName: 'Stolarczyk',
-    email: 'piotr@immotef.com',
+    firstName: 'John',
+    lastName: 'Bravo',
+    email: 'john@gmail.com',
     password: '111',
     repeatPassword: '1111'
 }

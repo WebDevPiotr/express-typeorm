@@ -24,9 +24,9 @@ describe('Jwt Token Test', () => {
 
 const user: User = new User()
 user.id = 1
-user.firstName = 'Piotr'
-user.lastName = 'Stolarczyk'
-user.email = 'piotr@immotef.com'
+user.firstName = 'John'
+user.lastName = 'Bravo'
+user.email = 'john@gmail.com'
 user.password = '111'
 
 

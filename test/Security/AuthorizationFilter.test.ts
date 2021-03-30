@@ -1,6 +1,5 @@
 import buildApp from '../../src/app'
 import Database from '../../src/Database/Database'
-import LoginRequest from '../../src/Security/dto/LoginRequest'
 import supertest from 'supertest'
 import JwtToken from '../../src/Security/JwtToken'
 import User from '../../src/User/User.entity'
@@ -59,14 +58,9 @@ describe('Authorization Filter Test', () => {
 
 const user: User = new User()
 user.id = 1
-user.firstName = 'Piotr'
-user.lastName = 'Stolarczyk'
-user.email = 'piotr@immotef.com'
+user.firstName = 'John'
+user.lastName = 'Bravo'
+user.email = 'john@gmail.com'
 user.password = '111'
 
 const token = JwtToken.createToken(user)
-
-const loginBody: LoginRequest = {
-    email: 'piotr@immotef.com',
-    password: '111',
-}

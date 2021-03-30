@@ -1,4 +1,5 @@
 import Database from "Database/Database";
+import NotFoundException from "Errors/exceptions/NotFoundException";
 import User from "User/User.entity";
 
 class UserService {
@@ -8,7 +9,11 @@ class UserService {
     }
 
     public static async findById(id: number) {
-        return await Database.getRepository(User).findOne(id)
+        const user = await Database.getRepository(User).findOne(id)
+
+        if (!user) throw new NotFoundException('User not found')
+
+        return user
     }
 }
 

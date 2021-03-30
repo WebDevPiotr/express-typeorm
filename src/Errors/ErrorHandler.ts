@@ -7,10 +7,10 @@ const errorHandler = (error: HttpError, req: Request, res: Response, next: NextF
     const responseBody: ErrorResponse = {
         name: error.name || '',
         status: error.statusCode || 500,
-        message: error.message,
+        message: error.message || 'Internal server error',
     }
 
-    res.status(responseBody.status).send(responseBody)
+    res.status(responseBody.status).json(responseBody)
 }
 
 export default errorHandler
