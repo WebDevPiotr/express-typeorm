@@ -10,9 +10,7 @@ class UserService {
 
     public static async findById(id: number) {
         const user = await Database.getRepository(User).findOne(id)
-
         if (!user) throw new NotFoundException('User not found')
-
         return user
     }
 }

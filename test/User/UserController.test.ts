@@ -1,4 +1,4 @@
-import buildApp from '../../src/app'
+import AppFactory from '../../src/App/AppFactory'
 import Database from '../../src/Database/Database'
 import User from '../../src/User/User.entity'
 import JwtToken from '../../src/Security/JwtToken'
@@ -10,7 +10,7 @@ describe('User Controller Test', () => {
 
     beforeAll(async () => {
         await Database.init()
-        request = supertest(buildApp())
+        request = supertest(AppFactory.get())
     })
 
     afterAll(async () => {
@@ -26,12 +26,6 @@ describe('User Controller Test', () => {
         const response = await request.get("/users").set('Authorization', `Bearer ${token}`)
         expect(response.status).toBe(200)
         expect(response.body.length).toBe(2)
-    })
-
-    it('Get users request - empty list', async () => {
-        const response = await request.get("/users").set('Authorization', `Bearer ${token}`)
-        expect(response.status).toBe(200)
-        expect(response.body.length).toBe(0)
     })
 
     it('Get user request - found', async () => {

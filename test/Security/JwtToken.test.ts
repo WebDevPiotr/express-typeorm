@@ -1,4 +1,5 @@
 import JwtToken from '../../src/Security/JwtToken'
+import { UserPayloadType } from '../../src/Security/UserPayload'
 import User from '../../src/User/User.entity'
 
 describe('Jwt Token Test', () => {
@@ -32,8 +33,8 @@ user.password = '111'
 
 const token = JwtToken.createToken(user)
 
-const payload = {
+const payload: UserPayloadType = {
     id: user.id,
     email: user.email,
-    name: `${user.firstName} ${user.lastName}`
+    fullName: `${user.firstName} ${user.lastName}`
 }

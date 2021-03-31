@@ -1,4 +1,4 @@
-import buildApp from '../../src/app'
+import AppFactory from '../../src/App/AppFactory'
 import Database from '../../src/Database/Database'
 import User from '../../src/User/User.entity'
 import RegisterRequest from '../../src/Security/dto/RegisterRequest'
@@ -11,7 +11,7 @@ describe('Auth Controller Test', () => {
 
     beforeAll(async () => {
         await Database.init()
-        request = supertest(buildApp())
+        request = supertest(AppFactory.get())
     })
 
     afterAll(async () => {
