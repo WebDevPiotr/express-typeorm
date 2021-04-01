@@ -9,7 +9,16 @@ import BadRequestException from '../../src/Errors/exceptions/BadRequestException
 describe('Auth Service Test', () => {
 
     beforeAll(async () => {
-        await Database.init()
+        await Database.init({
+            type: "postgres",
+            host: "localhost",
+            port: process.env.testDbPort,
+            username: "postgres",
+            password: "postgres",
+            database: "test",
+            synchronize: true,
+            entities: ["src/**/*.entity.ts"],
+        })
     })
 
     afterAll(async () => {

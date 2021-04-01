@@ -12,7 +12,16 @@ describe('Authorization Filter Test', () => {
     let token: string
 
     beforeAll(async () => {
-        await Database.init()
+        await Database.init({
+            type: "postgres",
+            host: "localhost",
+            port: process.env.testDbPort,
+            username: "postgres",
+            password: "postgres",
+            database: "test",
+            synchronize: true,
+            entities: ["src/**/*.entity.ts"],
+        })
         request = supertest(AppFactory.get())
         user = await Database.getRepository(User).save(User.fromRequest(registerBody))
         token = JwtToken.createToken(user)

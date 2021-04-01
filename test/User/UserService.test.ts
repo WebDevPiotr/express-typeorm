@@ -6,7 +6,16 @@ import NotFoundException from '../../src/Errors/exceptions/NotFoundException'
 describe('User Service Test', () => {
 
     beforeAll(async () => {
-        await Database.init()
+        await Database.init({
+            type: "postgres",
+            host: "localhost",
+            port: process.env.testDbPort,
+            username: "postgres",
+            password: "postgres",
+            database: "test",
+            synchronize: true,
+            entities: ["src/**/*.entity.ts"],
+        })
         await Database.getRepository(User).query(
             `INSERT INTO users (id, "firstName", "lastName", email, password) VALUES
             (1, 'Jan', 'Kowalski', 'kowalski@gmail.com', '111'),

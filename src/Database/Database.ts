@@ -4,12 +4,16 @@ class Database {
 
     private static connection: Connection
 
-    public static async init() {
-        this.connection = await createConnection(process.env.NODE_ENV)
+    public static async init(config?: any) {
+        if (config) {
+            this.connection = await createConnection(config)
+            //console.log(this.connection)
+        }
+        else this.connection = await createConnection(process.env.NODE_ENV)
     }
 
     public static async close() {
-        this.connection.close()
+        await this.connection.close()
         this.connection = null
     }
 

@@ -9,4 +9,6 @@ module.exports = {
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx'],
   moduleDirectories: ['node_modules', 'src'],
   setupFiles: ["dotenv/config"],
+  globalSetup: '<rootDir>/test/globalSetup.ts',
+  globalTeardown: '<rootDir>/test/globalTeardown.ts'
 }

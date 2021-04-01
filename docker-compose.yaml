@@ -1,17 +1,15 @@
 version: "3"
 
 services:
-  postgres-dev:
+  postgres:
     image: postgres
-    container_name: postgres-dev
+    container_name: postgres
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: dev
-    ports:
-      - "5432:5432"
+      POSTGRES_DB: auth
     volumes:
-      - database-data-dev:/var/lib/postgresql/data
+      - database-data:/var/lib/postgresql/data
 
   server:
     build:
@@ -22,7 +20,7 @@ services:
     volumes:
       - ./:/usr/src/app
     depends_on:
-      - postgres-dev
-    entrypoint: ["npm", "run", "dev"]
+      - postgres
+    entrypoint: ["npm", "run", "start"]
 volumes:
-  database-data-dev:
+  database-data:
