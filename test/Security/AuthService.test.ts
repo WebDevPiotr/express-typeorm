@@ -1,10 +1,10 @@
-import Database from '../../src/Database/Database'
-import User from '../../src/User/User.entity'
-import RegisterRequest from '../../src/Security/dto/RegisterRequest'
-import LoginRequest from '../../src/Security/dto/LoginRequest'
-import AuthService from '../../src/Security/AuthService'
-import UnauthorizedException from '../../src/Errors/exceptions/UnauthorizedException'
-import BadRequestException from '../../src/Errors/exceptions/BadRequestException'
+import Database from 'Database/Database'
+import User from 'User/User.entity'
+import RegisterRequest from 'Security/dto/RegisterRequest'
+import LoginRequest from 'Security/dto/LoginRequest'
+import AuthService from 'Security/AuthService'
+import UnauthorizedException from 'Errors/exceptions/UnauthorizedException'
+import BadRequestException from 'Errors/exceptions/BadRequestException'
 
 describe('Auth Service Test', () => {
 

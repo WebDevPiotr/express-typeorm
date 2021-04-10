@@ -1,6 +1,6 @@
-import JwtToken from '../../src/Security/JwtToken'
-import { UserPayloadType } from '../../src/Security/UserPayload'
-import User from '../../src/User/User.entity'
+import JwtToken from 'Security/JwtToken'
+import { UserPayloadType } from 'Security/UserPayload'
+import User from 'User/User.entity'
 
 describe('Jwt Token Test', () => {
 

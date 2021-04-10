@@ -1,4 +1,4 @@
-import PasswordHash from '../../src/Security/PasswordHash'
+import PasswordHash from 'Security/PasswordHash'
 
 describe('Password Hash Test', () => {
 

@@ -1,7 +1,7 @@
-import Database from '../../src/Database/Database'
-import User from '../../src/User/User.entity'
-import UserService from '../../src/User/UserService'
-import NotFoundException from '../../src/Errors/exceptions/NotFoundException'
+import Database from 'Database/Database'
+import User from 'User/User.entity'
+import UserService from 'User/UserService'
+import NotFoundException from 'Errors/exceptions/NotFoundException'
 
 describe('User Service Test', () => {
 

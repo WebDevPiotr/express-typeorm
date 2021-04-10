@@ -1,9 +1,9 @@
-import AppFactory from '../../src/App/AppFactory'
-import Database from '../../src/Database/Database'
+import AppFactory from 'App/AppFactory'
+import Database from 'Database/Database'
 import supertest from 'supertest'
-import JwtToken from '../../src/Security/JwtToken'
-import User from '../../src/User/User.entity'
-import RegisterRequest from '../../src/Security/dto/RegisterRequest'
+import JwtToken from 'Security/JwtToken'
+import User from 'User/User.entity'
+import RegisterRequest from 'Security/dto/RegisterRequest'
 
 describe('Authorization Filter Test', () => {
 

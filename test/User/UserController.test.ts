@@ -1,7 +1,7 @@
-import AppFactory from '../../src/App/AppFactory'
-import Database from '../../src/Database/Database'
-import User from '../../src/User/User.entity'
-import JwtToken from '../../src/Security/JwtToken'
+import AppFactory from 'App/AppFactory'
+import Database from 'Database/Database'
+import User from 'User/User.entity'
+import JwtToken from 'Security/JwtToken'
 import supertest from 'supertest'
 
 describe('User Controller Test', () => {

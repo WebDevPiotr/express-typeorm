@@ -1,4 +1,4 @@
-import JsonReplacer from '../../src/Utils/JsonReplacer'
+import JsonReplacer from 'Utils/JsonReplacer'
 
 describe('Json Replacer Test', () => {
 

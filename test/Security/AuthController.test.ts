@@ -1,8 +1,9 @@
-import AppFactory from '../../src/App/AppFactory'
-import Database from '../../src/Database/Database'
-import User from '../../src/User/User.entity'
-import RegisterRequest from '../../src/Security/dto/RegisterRequest'
-import LoginRequest from '../../src/Security/dto/LoginRequest'
+import AppFactory from 'App/AppFactory'
+import Database from 'Database/Database'
+import User from 'User/User.entity'
+import RegisterRequest from 'Security/dto/RegisterRequest'
+import LoginRequest from 'Security/dto/LoginRequest'
+
 import supertest from 'supertest'
 
 describe('Auth Controller Test', () => {
