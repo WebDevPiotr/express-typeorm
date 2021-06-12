@@ -1,5 +1,4 @@
-import User from "User/User.entity";
-
+import User from "User/Repository/User.entity";
 class UserPayload {
 
     static fromUser(user: User): UserPayloadType {

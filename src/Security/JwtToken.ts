@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken'
-import User from 'User/User.entity'
+import User from 'User/Repository/User.entity'
 import UserPayload, { UserPayloadType } from './UserPayload'
 class JwtToken {
 

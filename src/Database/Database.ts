@@ -1,14 +1,11 @@
-import { Connection, createConnection, ObjectType } from 'typeorm'
+import { Connection, createConnection } from 'typeorm'
 
 class Database {
 
     private static connection: Connection
 
-    public static async init(config?: any) {
-        if (config) {
-            this.connection = await createConnection(config)
-            //console.log(this.connection)
-        }
+    public static async connect(config?: any) {
+        if (config) this.connection = await createConnection(config)
         else this.connection = await createConnection(process.env.NODE_ENV)
     }
 
@@ -21,9 +18,6 @@ class Database {
         return this.connection
     }
 
-    public static getRepository<Entity>(target: ObjectType<Entity>) {
-        return this.connection.getRepository(target)
-    }
 }
 
 export default Database

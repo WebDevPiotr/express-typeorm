@@ -1,5 +1,5 @@
 import { Request } from 'express';
-import User from 'User/User.entity'
+import User from 'User/Repository/User.entity'
 import UserContext from './UserContext'
 
 class ContextRegistry {

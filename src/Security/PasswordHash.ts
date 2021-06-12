@@ -2,8 +2,8 @@ import bcrypt from 'bcrypt'
 
 class PasswordHash {
 
-    public static async hashPassword(password: string){
-        return await bcrypt.hash(password, 10)
+    public static hashPassword(password: string){
+        return bcrypt.hashSync(password, 10)
     }
 
     public static async isValidPassword(password: string, hashPassword: string){

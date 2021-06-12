@@ -1,17 +1,36 @@
-import Database from "Database/Database";
+import { Service } from 'typedi';
 import NotFoundException from "Errors/exceptions/NotFoundException";
-import User from "User/User.entity";
-
+import UserRepository from "./Repository/UserRepository";
+import UserRequest from './DTO/UserRequest';
+import User from './User';
+import UserResponse from './DTO/UserResponse';
+import BadRequestException from 'Errors/exceptions/BadRequestException';
+@Service()
 class UserService {
 
-    public static async findAll() {
-        return await Database.getRepository(User).find()
+    constructor(private repository: UserRepository) { }
+
+    public async findAll(): Promise<Array<UserResponse>> {
+        const users = await this.repository.findAll()
+        return users.map(user => UserResponse.fromUser(user))
     }
 
-    public static async findById(id: number) {
-        const user = await Database.getRepository(User).findOne(id)
+    public async findById(id: number): Promise<UserResponse> {
+        const user = await this.repository.findById(id)
         if (!user) throw new NotFoundException('User not found')
-        return user
+        return UserResponse.fromUser(user)
+    }
+
+    public async save(userRequest: UserRequest): Promise<UserResponse> {
+        const user = await this.repository.findByEmail(userRequest.email)
+        if(user) throw new BadRequestException('User with provided email already exist')
+        const newUser = await this.repository.save(User.fromRequest(userRequest))
+        return UserResponse.fromUser(newUser)
+    }
+
+    public async removeById(id: number): Promise<void> {
+        const removedUser = await this.repository.removeById(id)
+        if (!removedUser) throw new NotFoundException('User not found')
     }
 }
 
