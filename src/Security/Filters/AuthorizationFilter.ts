@@ -1,53 +1,45 @@
-import AccessDeniedException from 'Errors/exceptions/AccessDeniedException'
 import { NextFunction, Request, Response } from 'express'
 import JwtToken from 'Security/JwtToken'
 import ContextRegistry from 'App/ContextRegistry'
-import Filter from './Filter'
-import { getCustomRepository } from 'typeorm'
-import { UserEntityRepository } from 'User/Repository/UserEntityRepository'
+import { Service } from 'typedi'
+import UserRepository from 'User/Repository/UserRepository'
+import { ExpressMiddlewareInterface, ForbiddenError } from 'routing-controllers';
+@Service()
+export class AuthorizationFilter implements ExpressMiddlewareInterface {
 
-class AuthorizationFilter implements Filter {
+    constructor(private userRepository: UserRepository) { }
 
-    constructor(){
-        this.filter = this.filter.bind(this)
+    public async use(req: Request, res: Response, next?: NextFunction) {
+        if (!this.isAuthorizationHeaderPresent(req)) throw new ForbiddenError('No authorization header')
+        if (!this.isTokenPrefixCorrect(req.headers.authorization)) throw new ForbiddenError('Wrong token prefix')
+        const token = this.getTokenFromHeader(req.headers.authorization)
+        if (!this.isTokenValid(token)) throw new ForbiddenError('Wrong token')
+        const user = await this.getUserFromToken(token)
+        if (!user) throw new ForbiddenError('The token does not match any user')
+        ContextRegistry.set(req, user)
+        next()
     }
 
-    public async filter(req: Request, res: Response, next: NextFunction) {
-        try {
-            if (!this.isAuthorizationHeaderPresent(req)) throw new AccessDeniedException('No authorization header')
-            if (!this.isTokenPrefixCorrect(req.headers.authorization)) throw new AccessDeniedException('Wrong token prefix')
-            const token = this.getTokenFromHeader(req.headers.authorization)
-            if (!this.isTokenValid(token)) throw new AccessDeniedException('Wrong token')
-            const user = await this.getUserFromToken(token)
-            if (!user) throw new AccessDeniedException('The token does not match any user')
-            ContextRegistry.set(req, user)
-            next()
-        } catch (e) {
-            next(e)
-        }
-    }
-
-    private isAuthorizationHeaderPresent(req: Request){
+    private isAuthorizationHeaderPresent(req: Request) {
         return Boolean(req.headers.authorization)
     }
-    
-    private isTokenPrefixCorrect(header: string){
+
+    private isTokenPrefixCorrect(header: string) {
         return header.split(' ')[0] === 'Bearer'
     }
-    
-    private isTokenValid(token: string){
+
+    private isTokenValid(token: string) {
         return JwtToken.isTokenValid(token)
     }
-    
-    private getTokenFromHeader(header: string){
+
+    private getTokenFromHeader(header: string) {
         return header.split(' ')[1]
     }
-    
-    private async getUserFromToken(token: string){
-        const payload = JwtToken.decodeToken(token)
-        return await getCustomRepository(UserEntityRepository).findOne(payload.id)
-    }
 
+    private async getUserFromToken(token: string) {
+        const payload = JwtToken.decodeToken(token)
+        return this.userRepository.findById(payload.id)
+    }
 }
 
 export default AuthorizationFilter

@@ -7,7 +7,6 @@
     "noImplicitAny": true,
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
-    "sourceMap": true,
     "outDir": "dist",
     "baseUrl": ".",
     "paths": {

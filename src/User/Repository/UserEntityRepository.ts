@@ -1,7 +1,5 @@
-import { Service } from 'typedi';
-import { Repository, EntityRepository } from 'typeorm';
+import { Repository } from 'typeorm';
+import { EntityRepository } from 'Utils/RepositoryDecorator';
 import UserEntity from './User.entity';
-
-@Service()
 @EntityRepository(UserEntity)
-export class UserEntityRepository extends Repository<UserEntity> {}
+export class UserEntityRepository extends Repository<UserEntity> { }

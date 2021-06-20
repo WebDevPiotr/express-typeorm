@@ -1,40 +1,21 @@
-import { Router, Request, Response, NextFunction } from 'express'
 import UserService from './UserService'
-import UserResponse from './DTO/UserResponse'
-import ContextRegistry from 'App/ContextRegistry'
-import { Container } from 'typeorm-typedi-extensions';
+import { Get, Param } from 'routing-controllers';
+import { RestAuthorizatedController } from 'Utils/ControllerDecorator';
+@RestAuthorizatedController('/users')
+export class UserController {
 
-const router: Router = Router()
+  constructor(private userService: UserService) { }
 
-router.get('/', async (req: Request, res: Response, next: NextFunction) => {
-    try {
-        const users: UserResponse[] = await Container.get(UserService).findAll()
-        res.status(200).json(users)
-    } catch (e) {
-        next(e)
-    }
-})
+  @Get('/')
+  public findAll() {
+    return this.userService.findAll()
+  }
 
-router.get('/me', async (req: Request, res: Response, next: NextFunction) => {
-    try {
-        const context = ContextRegistry.get(req)
-        const user = await Container.get(UserService).findById(context.id)
-        res.status(200).json(user)
-    } catch (e) {
-        next(e)
-    }
-})
+  @Get('/:id')
+  public getOne(@Param('id') id: number) {
+    return this.userService.findById(id);
+  }
 
-router.get('/:id', async (req: Request, res: Response, next: NextFunction) => {
-    try {
-        const id: number = Number(req.params.id)
-        const user = await Container.get(UserService).findById(id)
-        res.status(200).json(user)
-    } catch (e) {
-        next(e)
-    }
-})
+}
 
-
-
-export default router
+export default UserController

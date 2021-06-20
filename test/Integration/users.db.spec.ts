@@ -3,7 +3,7 @@ import UserEntity from 'User/Repository/User.entity'
 
 import { expect } from 'chai'
 import { StartedTestContainer } from 'testcontainers'
-import { initDbContainer } from '../initDbContainer'
+import { initDbContainer, config } from '../mockDatabase'
 import { UserEntityRepository } from 'User/Repository/UserEntityRepository'
 import { getCustomRepository } from 'typeorm'
 
@@ -15,16 +15,10 @@ describe('User Database Test', () => {
   before(async () => {
     container = await initDbContainer()
     await Database.connect({
-      type: "postgres",
-      host: "localhost",
+      ...config,
       port: container.getMappedPort(5432),
-      username: "postgres",
-      password: "postgres",
-      database: "test",
-      synchronize: true,
-      entities: ["src/**/*.entity.ts"],
     })
-    userReposotory = getCustomRepository(UserEntityRepository);
+    userReposotory = getCustomRepository(UserEntityRepository, 'test');
   })
 
   after(async () => {

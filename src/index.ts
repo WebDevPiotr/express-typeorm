@@ -1,15 +1,17 @@
 import "reflect-metadata";
 import { Container } from 'typeorm-typedi-extensions';
-import { useContainer } from "typeorm";
-import dotenv from "dotenv"
-dotenv.config()
+import { useContainer as ormUseContainer } from "typeorm";
+import { useContainer as routingUseContainer } from "routing-controllers";
 
 import Database from "Database/Database";
-import AppFactory from 'App/AppFactory'
+import Application from "App/Application";
 
-const port = process.env.PORT || 8000
+const init = async () => {
+    const port = process.env.PORT || 8000
+    ormUseContainer(Container);
+    routingUseContainer(Container)
+    await Database.connect()
+    Application.start().listen(port, () => console.log(`Server started at http://localhost:${port}`))
+}
 
-useContainer(Container);
-Database.connect()
-    .then(AppFactory.get)
-    .then(app => app.listen(port, () => console.log(`Server started at http://localhost:${port}`)))
+init()

@@ -9,3 +9,14 @@ export const initDbContainer = async () => {
     .start();
     return container
 }
+
+export const config = {
+    name: 'test',
+    type: "postgres",
+    host: "localhost",
+    username: "postgres",
+    password: "postgres",
+    database: "test",
+    synchronize: true,
+    entities: ["src/**/*.entity.ts"],
+  }

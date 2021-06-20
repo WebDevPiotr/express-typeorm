@@ -1,20 +1,16 @@
 import User from "User/Repository/User.entity";
 class UserPayload {
 
-    static fromUser(user: User): UserPayloadType {
-        return {
-            id: user.id,
-            email: user.email,
-            fullName: `${user.firstName} ${user.lastName}`
-        }
+    public readonly id: number
+    public readonly email: string
+    public readonly fullName: string
+
+    constructor(user: User) {
+        this.id = user.id
+        this.email = user.email
+        this.fullName = `${user.firstName} ${user.lastName}`
     }
 
 }
 
 export default UserPayload
-
-export type UserPayloadType = {
-    id: number,
-    email: string,
-    fullName: string,
-}

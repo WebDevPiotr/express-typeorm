@@ -1,5 +1,4 @@
 import { Connection, createConnection } from 'typeorm'
-
 class Database {
 
     private static connection: Connection

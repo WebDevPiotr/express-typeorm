@@ -1,13 +1,12 @@
 import { Service } from 'typedi';
-import { InjectRepository } from 'typeorm-typedi-extensions';
+import { RepositoryInstance } from 'Utils/RepositoryDecorator';
 import { UserEntityRepository } from "./UserEntityRepository";
 import User from "../User";
 import UserEntity from "./User.entity";
-
 @Service()
 class UserRepository {
 
-    constructor(@InjectRepository(process.env.NODE_ENV) private repository: UserEntityRepository) { }
+    constructor(@RepositoryInstance() private repository: UserEntityRepository) { }
 
     public async findAll(): Promise<Array<User>> {
         const users = await this.repository.find()

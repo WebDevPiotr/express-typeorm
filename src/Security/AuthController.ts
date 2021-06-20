@@ -1,28 +1,25 @@
-import { Router, Request, Response, NextFunction } from 'express'
-import { Container } from 'typeorm-typedi-extensions';
+import { Body, HttpCode, Post } from 'routing-controllers';
+import { RestController } from 'Utils/ControllerDecorator';
 import AuthService from './AuthService'
+import LoginRequest from './DTO/LoginRequest';
+import RegisterRequest from './DTO/RegisterRequest';
+@RestController('/auth')
+export class AuthController {
 
-const router: Router = Router()
+    constructor(private authService: AuthService) { }
 
-router.post('/login', async (req: Request, res: Response, next: NextFunction) => {
-    try {
-        const token = await Container.get(AuthService).handleLoginRequest(req.body)
-        res.setHeader('Authorization', `Bearer ${token}`)
-        res.status(200).send()
-    } catch (e) {
-        next(e)
+    @Post('/login')
+    public login(@Body() request: LoginRequest) {
+        return this.authService.handleLoginRequest(request)
     }
-})
 
-router.post('/register', async (req: Request, res: Response, next: NextFunction) => {
-    try {
-        const token = await Container.get(AuthService).handleRegisterRequest(req.body)
-        res.setHeader('Authorization', `Bearer ${token}`)
-        res.status(201).send()
-    } catch (e) {
-        next(e)
+    @HttpCode(201)
+    @Post('/register')
+    public reqister(@Body() request: RegisterRequest) {
+        return this.authService.handleRegisterRequest(request);
     }
-})
 
-export default router
+}
+
+export default AuthController
 
