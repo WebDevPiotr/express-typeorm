@@ -1,14 +1,16 @@
 import { NextFunction, Request, Response } from 'express'
 import { HttpError } from 'routing-controllers';
 import { Middleware, ExpressErrorMiddlewareInterface } from 'routing-controllers';
+import { Service } from 'typedi';
 
 type ErrorResponse = {
     name: string
     status: number,
     message: string,
 }
+@Service()
 @Middleware({ type: 'after' })
-class CustomErrorHandler implements ExpressErrorMiddlewareInterface {
+class ErrorHandler implements ExpressErrorMiddlewareInterface {
     error(error: HttpError, req: Request, res: Response, next: NextFunction) {
         const responseBody: ErrorResponse = {
             name: error.name || '',
@@ -20,4 +22,4 @@ class CustomErrorHandler implements ExpressErrorMiddlewareInterface {
     }
 }
 
-export default CustomErrorHandler
+export default ErrorHandler

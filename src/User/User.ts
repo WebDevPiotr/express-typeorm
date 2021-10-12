@@ -1,4 +1,5 @@
 import RegisterRequest from "Security/DTO/RegisterRequest";
+import PasswordHash from "Security/PasswordHash";
 import UserRequest from "./DTO/UserRequest";
 
 class User {
@@ -86,7 +87,7 @@ class User {
             .setFirstName(request.firstName)
             .setLastName(request.lastName)
             .setEmail(request.email)
-            .setPassword(request.password)
+            .setPassword(PasswordHash.hashPassword(request.password))
             .build()
     }
 }

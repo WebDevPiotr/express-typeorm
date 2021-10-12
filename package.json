@@ -1,7 +1,7 @@
 {
-   "name": "auth-system-node-postgres",
+   "name": "node-typeorm",
    "version": "0.0.1",
-   "description": "Awesome project developed with TypeORM.",
+   "description": "",
    "scripts": {
       "start": "NODE_ENV=production ts-node -r dotenv/config -r tsconfig-paths/register src/index.ts",
       "dev": "NODE_ENV=development nodemon",

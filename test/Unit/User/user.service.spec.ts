@@ -4,7 +4,6 @@ import User from 'User/User'
 import UserRepository from 'User/Repository/UserRepository'
 import sinon from 'sinon'
 import UserService from 'User/UserService'
-import UserResponse from 'User/DTO/UserResponse'
 import { UserEntityRepository } from 'User/Repository/UserEntityRepository'
 import UserRequest from 'User/DTO/UserRequest'
 import { NotFoundError, BadRequestError } from 'routing-controllers'
@@ -30,8 +29,6 @@ describe('User Service Test', () => {
         .setPassword('testPassword')
         .build()
 
-    const response = UserResponse.fromUser(user)
-
     afterEach(() => {
         sinon.restore()
     })
@@ -42,7 +39,7 @@ describe('User Service Test', () => {
             sinon.stub(userReposotory, "findByEmail").returns(undefined)
             sinon.stub(userReposotory, "save").returns(Promise.resolve(user))
             const result = await userService.save(request)
-            expect(result).to.be.eql(response)
+            expect(result).to.be.eql(user)
         })
 
         it('should throw error on save if user already exist', async () => {
@@ -56,7 +53,7 @@ describe('User Service Test', () => {
         it('should find users', async () => {
             sinon.stub(userReposotory, "findAll").returns(Promise.resolve([user]))
             const result = await userService.findAll()
-            expect(result).to.be.eql([response])
+            expect(result).to.be.eql([user])
         })
 
         it('should return empty array if no users', async () => {
@@ -68,7 +65,7 @@ describe('User Service Test', () => {
         it('should find user', async () => {
             sinon.stub(userReposotory, "findById").withArgs(1).returns(Promise.resolve(user))
             const result = await userService.findById(1)
-            expect(result).to.be.eql(response)
+            expect(result).to.be.eql(user)
         })
 
         it('should throw error if user not exist', async () => {

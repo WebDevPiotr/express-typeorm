@@ -9,7 +9,7 @@ import { initDbContainer, config } from '../mockDatabase'
 import { UserEntityRepository } from 'User/Repository/UserEntityRepository'
 
 
-describe('User Controller Test', () => {
+describe('User End-to-end Test', () => {
 
   let container: StartedTestContainer
   let request: any

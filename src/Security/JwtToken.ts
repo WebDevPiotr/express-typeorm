@@ -1,12 +1,17 @@
 import jwt from 'jsonwebtoken'
-import User from 'User/Repository/User.entity'
-import UserPayload from './UserPayload'
+import User from 'User/User'
+
+type UserPayload = {
+    id: number,
+    email: string,
+    fullName: string
+}
 class JwtToken {
 
     private static readonly secret: string = process.env.JWT_SECRET
 
     public static createToken(user: User) {
-        return jwt.sign(new UserPayload(user), this.secret, { subject: user.email, expiresIn: 60 * 60 })
+        return jwt.sign(this.createPayload(user), this.secret, { subject: user.email, expiresIn: 60 * 60 })
     }
 
     public static isTokenValid(token: string) {
@@ -21,6 +26,14 @@ class JwtToken {
 
     public static decodeToken(token: string) {
         return jwt.decode(token) as UserPayload
+    }
+
+    private static createPayload(user: User): UserPayload{
+        return {
+            id: user.id,
+            email:user.email,
+            fullName: `${user.firstName} ${user.lastName}`,
+        }
     }
 
 }

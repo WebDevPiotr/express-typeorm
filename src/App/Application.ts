@@ -1,36 +1,33 @@
 import { useExpressServer } from "routing-controllers";
 import express, { Express, json } from 'express'
-import AuthController from "Security/AuthController";
-import UserController from "User/UserController";
-
 import helmet from "helmet";
 import morgan from "morgan";
-import CustomErrorHandler from "Utils/ErrorHandler";
 
+import AuthController from "Security/AuthController";
+import UserController from "User/UserController";
+import ErrorHandler from "Utils/ErrorHandler";
 class Application {
 
-    private static application: Express
-
     public static start() {
-        this.application = express()
-        this.addMiddlewares()
-        this.addRouting() 
-        return this.application
+        const app = express()
+        this.addMiddlewares(app)
+        this.addRouting(app) 
+        return app
     }
 
-    private static addRouting(){
-        useExpressServer(this.application, {
+    private static addRouting(app: Express){
+        useExpressServer(app, {
             cors: true,
             defaultErrorHandler: false,
             controllers: [UserController, AuthController],
-            middlewares: [CustomErrorHandler]
+            middlewares: [ErrorHandler]
         });
     }
 
-    private static addMiddlewares() {
-        this.application.use(helmet())
-        this.application.use(json())
-        this.application.use(morgan('combined', { skip: () => process.env.NODE_ENV === 'test' }))
+    private static addMiddlewares(app: Express) {
+        app.use(helmet())
+        app.use(json())
+        app.use(morgan('combined', { skip: () => process.env.NODE_ENV === 'test' }))
     }
 
 }

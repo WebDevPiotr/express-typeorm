@@ -4,27 +4,27 @@ import UserRepository from "./Repository/UserRepository";
 import UserRequest from './DTO/UserRequest';
 import User from './User';
 import UserResponse from './DTO/UserResponse';
+import PasswordHash from 'Security/PasswordHash';
 @Service()
 class UserService {
 
     constructor(private repository: UserRepository) { }
 
-    public async findAll(): Promise<Array<UserResponse>> {
+    public async findAll(): Promise<Array<User>> {
         const users = await this.repository.findAll()
-        return users.map(user => UserResponse.fromUser(user))
+        return users
     }
 
-    public async findById(id: number): Promise<UserResponse> {
+    public async findById(id: number): Promise<User> {
         const user = await this.repository.findById(id)
         if (!user) throw new NotFoundError('User not found')
-        return UserResponse.fromUser(user)
+        return user
     }
 
-    public async save(userRequest: UserRequest): Promise<UserResponse> {
-        const user = await this.repository.findByEmail(userRequest.email)
-        if(user) throw new BadRequestError('User with provided email already exist')
-        const newUser = await this.repository.save(User.fromRequest(userRequest))
-        return UserResponse.fromUser(newUser)
+    public async save(userRequest: UserRequest): Promise<User> {
+        if(await this.repository.findByEmail(userRequest.email)) throw new BadRequestError('User with provided email already exist')
+        const user = await this.repository.save(User.fromRequest(userRequest))
+        return user
     }
 
     public async removeById(id: number): Promise<void> {

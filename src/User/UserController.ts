@@ -1,19 +1,22 @@
 import UserService from './UserService'
 import { Get, Param } from 'routing-controllers';
 import { RestAuthorizatedController } from 'Utils/ControllerDecorator';
+import UserResponse from './DTO/UserResponse';
 @RestAuthorizatedController('/users')
 export class UserController {
 
   constructor(private userService: UserService) { }
 
   @Get('/')
-  public findAll() {
-    return this.userService.findAll()
+  public async findAll() {
+    const users =  await this.userService.findAll() 
+    return users.map(user => UserResponse.fromUser(user))
   }
 
   @Get('/:id')
-  public getOne(@Param('id') id: number) {
-    return this.userService.findById(id);
+  public async findById(@Param('id') id: number) {
+    const user = await this.userService.findById(id)
+    return UserResponse.fromUser(user)
   }
 
 }
